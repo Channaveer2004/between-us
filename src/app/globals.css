@@ -12,15 +12,51 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* Dark mode temporarily disabled to maintain the clean light theme aesthetic */
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Tiptap Editor Global Styles */
+.ProseMirror h2 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.ProseMirror p {
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+  color: #1f2937;
+  line-height: 1.75;
+}
+.ProseMirror ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.ProseMirror ol {
+  list-style-type: decimal;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.ProseMirror blockquote {
+  border-left-width: 4px;
+  border-color: #d1d5db;
+  padding-left: 1rem;
+  font-style: italic;
+  color: #374151;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: #9ca3af;
+  content: "Tell your story...";
+  float: left;
+  height: 0;
+  pointer-events: none;
 }
