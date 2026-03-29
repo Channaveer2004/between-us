@@ -52,26 +52,26 @@ export default async function PublicProfilePage({ params }: { params: Promise<{ 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col md:flex-row gap-12 min-h-screen">
       <div className="md:w-2/3">
-        <h2 className="text-4xl font-serif font-bold text-gray-900 mb-8 md:hidden">{targetedUser.name}</h2>
-        <div className="border-b border-gray-200 mb-8 pb-4">
-          <span className="border-black text-black font-medium text-sm border-b-2 py-4">
+        <h2 className="text-4xl font-serif font-bold text-slate-900 dark:text-slate-100 mb-8 md:hidden">{targetedUser.name}</h2>
+        <div className="border-b border-slate-200 dark:border-slate-800 mb-8 pb-4">
+          <span className="border-slate-900 text-slate-900 dark:border-slate-100 dark:text-slate-100 font-medium text-sm border-b-2 py-4">
             Published Stories
           </span>
         </div>
 
         <div className="space-y-8">
           {targetedUser.posts.length === 0 ? (
-            <p className="text-gray-500">This user hasn't published any stories yet.</p>
+            <p className="text-slate-500 dark:text-slate-400">This user hasn't published any stories yet.</p>
           ) : (
             targetedUser.posts.map((post) => (
-              <div key={post.id} className="pb-8 border-b border-gray-100 flex flex-col gap-2 group">
+              <div key={post.id} className="pb-8 border-b border-slate-100 dark:border-slate-800 flex flex-col gap-2 group">
                 <Link href={`/post/${post.slug}`}>
-                  <h3 className="text-2xl font-bold text-gray-900 group-hover:underline mb-2">{post.title}</h3>
-                  <p className="text-gray-600 line-clamp-3 mb-4 leading-relaxed">
+                  <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 group-hover:underline mb-2">{post.title}</h3>
+                  <p className="text-slate-600 dark:text-slate-400 line-clamp-3 mb-4 leading-relaxed">
                     {post.content?.replace(/<[^>]*>?/gm, '').substring(0, 200)}...
                   </p>
                 </Link>
-                <div className="flex gap-4 text-xs text-gray-500">
+                <div className="flex gap-4 text-xs text-slate-500 dark:text-slate-500">
                   <span>{format(new Date(post.createdAt), "MMM d, yyyy")}</span>
                   <span>·</span>
                   <span>{Math.max(1, Math.ceil((post.content?.length || 0) / 1000))} min read</span>
@@ -84,11 +84,11 @@ export default async function PublicProfilePage({ params }: { params: Promise<{ 
 
       <div className="md:w-1/3">
         <div className="sticky top-24">
-          <div className="h-20 w-20 bg-gray-200 rounded-full mb-4 flex items-center justify-center text-3xl font-bold text-gray-600">
+          <div className="h-20 w-20 bg-slate-200 dark:bg-slate-800 rounded-full mb-4 flex items-center justify-center text-3xl font-bold text-slate-600 dark:text-slate-100">
             {targetedUser.name?.[0]?.toUpperCase() || "U"}
           </div>
-          <h2 className="text-xl font-bold text-gray-900">{targetedUser.name}</h2>
-          <p className="text-gray-500 text-sm mt-1">{targetedUser._count.followers} Followers</p>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">{targetedUser.name}</h2>
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">{targetedUser._count.followers} Followers</p>
 
           <div className="mt-6">
             {!isOwnProfile ? (

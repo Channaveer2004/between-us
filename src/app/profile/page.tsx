@@ -41,19 +41,19 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
       
       {/* Main content: Posts / Reading List */}
       <div className="md:w-2/3">
-        <h1 className="text-4xl font-serif font-bold text-gray-900 mb-8 md:hidden">{user.name}</h1>
+        <h1 className="text-4xl font-serif font-bold text-slate-900 dark:text-slate-100 mb-8 md:hidden">{user.name}</h1>
         
-        <div className="border-b border-gray-200 mb-8">
+        <div className="border-b border-slate-200 dark:border-slate-800 mb-8">
           <nav className="-mb-px flex space-x-8">
             <Link 
               href="/profile"
-              className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'stories' ? 'border-black text-black' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+              className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'stories' ? 'border-slate-900 text-slate-900 dark:border-slate-100 dark:text-slate-100' : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700'}`}
             >
               Your Stories
             </Link>
             <Link 
               href="/profile?tab=saved"
-              className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'saved' ? 'border-black text-black' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+              className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'saved' ? 'border-slate-900 text-slate-900 dark:border-slate-100 dark:text-slate-100' : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700'}`}
             >
               Reading List
             </Link>
@@ -63,19 +63,19 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
         <div className="space-y-8">
           {activeTab === "stories" && (
             user.posts.length === 0 ? (
-              <p className="text-gray-500">You haven't written any stories yet.</p>
+              <p className="text-slate-500 dark:text-slate-400">You haven't written any stories yet.</p>
             ) : (
               user.posts.map((post) => (
-                <div key={post.id} className="pb-8 border-b border-gray-100">
+                <div key={post.id} className="pb-8 border-b border-slate-100 dark:border-slate-800">
                   <Link href={`/post/${post.slug}`} className="block group">
-                    <h2 className="text-2xl font-bold text-gray-900 group-hover:underline mb-2">{post.title}</h2>
-                    <p className="text-gray-600 line-clamp-2 mb-3">
+                    <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 group-hover:underline mb-2">{post.title}</h2>
+                    <p className="text-slate-600 dark:text-slate-400 line-clamp-2 mb-3">
                       {post.content?.replace(/<[^>]*>?/gm, '').substring(0, 150)}...
                     </p>
                   </Link>
-                  <div className="flex gap-4 text-sm text-gray-500 mt-2">
+                  <div className="flex gap-4 text-sm text-slate-500 dark:text-slate-500 mt-2">
                     <span>Published on {format(new Date(post.createdAt), "MMM d, yyyy")}</span>
-                    <Link href={`/edit/${post.id}`} className="hover:text-gray-900 underline">Edit</Link>
+                    <Link href={`/edit/${post.id}`} className="hover:text-slate-900 dark:hover:text-slate-300 underline">Edit</Link>
                   </div>
                 </div>
               ))
@@ -84,27 +84,27 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
 
           {activeTab === "saved" && (
             user.bookmarks.length === 0 ? (
-              <p className="text-gray-500 text-lg py-12 text-center">No saved stories. Start reading and click the bookmark icon to save your favorites!</p>
+              <p className="text-slate-500 dark:text-slate-400 text-lg py-12 text-center">No saved stories. Start reading and click the bookmark icon to save your favorites!</p>
             ) : (
               user.bookmarks.map((bookmark) => (
-                <div key={bookmark.id} className="pb-8 border-b border-gray-100 flex flex-col sm:flex-row gap-6 group">
+                <div key={bookmark.id} className="pb-8 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row gap-6 group">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-3">
-                      <div className="h-6 w-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold shrink-0">
+                      <div className="h-6 w-6 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-100 flex items-center justify-center text-xs font-bold shrink-0">
                         {bookmark.post.author?.name?.[0]?.toUpperCase() || 'U'}
                       </div>
-                      <span className="text-sm font-medium text-gray-900">{bookmark.post.author?.name || "Unknown"}</span>
+                      <span className="text-sm font-medium text-slate-900 dark:text-slate-200">{bookmark.post.author?.name || "Unknown"}</span>
                     </div>
                     <Link href={`/post/${bookmark.post.slug}`}>
-                      <h3 className="text-2xl font-bold text-gray-900 group-hover:underline mb-2">{bookmark.post.title}</h3>
-                      <p className="text-gray-600 line-clamp-2 mb-4 leading-relaxed">
+                      <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 group-hover:underline mb-2">{bookmark.post.title}</h3>
+                      <p className="text-slate-600 dark:text-slate-400 line-clamp-2 mb-4 leading-relaxed">
                         {bookmark.post.content?.replace(/<[^>]*>?/gm, '').substring(0, 150)}...
                       </p>
                     </Link>
-                    <div className="flex gap-4 text-xs text-gray-500">
+                    <div className="flex gap-4 text-xs text-slate-500 dark:text-slate-500">
                       <span>{format(new Date(bookmark.post.createdAt), "MMM d, yyyy")}</span>
                       <span>·</span>
-                      <span className="bg-gray-100 px-2 py-1 rounded-sm">Reading List</span>
+                      <span className="bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-sm">Reading List</span>
                     </div>
                   </div>
                 </div>
@@ -117,11 +117,11 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
       {/* Sidebar: Profile Info */}
       <div className="md:w-1/3">
         <div className="sticky top-24">
-          <div className="h-24 w-24 bg-gray-200 rounded-full mb-6 flex items-center justify-center text-4xl font-bold shrink-0">
+          <div className="h-24 w-24 bg-slate-200 dark:bg-slate-800 rounded-full mb-6 flex items-center justify-center text-4xl font-bold shrink-0 text-slate-900 dark:text-slate-100">
             {user.name?.[0]?.toUpperCase()}
           </div>
-          <h2 className="text-xl font-bold text-gray-900">{user.name}</h2>
-          <p className="text-gray-500 text-sm mb-6 mt-1">{user.email}</p>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">{user.name}</h2>
+          <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 mt-1">{user.email}</p>
         </div>
       </div>
       
