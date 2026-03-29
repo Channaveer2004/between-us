@@ -44,9 +44,9 @@ export default function PostActions({ postId, initialLikes, isLikedInitially, is
   };
 
   return (
-    <div className="flex justify-between items-center py-4 border-t border-b border-gray-100 my-8 text-gray-500">
+    <div className="flex justify-between items-center py-4 border-t border-b border-gray-100 dark:border-slate-800 my-8 text-gray-500 dark:text-slate-400">
       <div className="flex items-center gap-6">
-        <button onClick={handleLike} className="flex items-center gap-2 hover:text-black transition">
+        <button onClick={handleLike} className="flex items-center gap-2 hover:text-black dark:hover:text-slate-200 transition">
           <Heart className={`h-6 w-6 ${isLiked ? "fill-red-500 text-red-500" : ""}`} strokeWidth={1.5} />
           <span className="text-sm">{likes}</span>
         </button>
@@ -54,8 +54,8 @@ export default function PostActions({ postId, initialLikes, isLikedInitially, is
       </div>
       
       <div className="flex items-center">
-        <button onClick={handleBookmark} className="flex items-center gap-2 hover:text-black transition">
-          <Bookmark className={`h-6 w-6 ${isBookmarked ? "fill-black text-black" : ""}`} strokeWidth={1.5} />
+        <button onClick={handleBookmark} className="flex items-center gap-2 hover:text-black dark:hover:text-slate-200 transition">
+          <Bookmark className={`h-6 w-6 ${isBookmarked ? "fill-black text-black dark:fill-slate-200 dark:text-slate-200" : ""}`} strokeWidth={1.5} />
         </button>      
       </div>
     </div>

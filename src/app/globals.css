@@ -12,6 +12,18 @@
   --font-mono: var(--font-geist-mono);
 }
 
+@custom-variant dark (&:is(.dark *));
+
+/* Dark mode configurations */
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+}
+.dark {
+  --background: #020617;
+  --foreground: #f1f5f9;
+}
+
 /* Dark mode temporarily disabled to maintain the clean light theme aesthetic */
 
 body {
@@ -52,6 +64,13 @@ body {
   color: #374151;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+}
+.dark .ProseMirror blockquote {
+  border-color: #334155;
+  color: #94a3b8;
+}
+.dark .ProseMirror p {
+  color: #cbd5e1;
 }
 .ProseMirror p.is-editor-empty:first-child::before {
   color: #64748b;

@@ -132,8 +132,8 @@ export default function Comments({ postId, postAuthorEmail }: { postId: string, 
   const currentUserEmail = session?.user?.email;
 
   return (
-    <div className="mt-16 pt-8 border-t border-gray-100">
-      <h3 className="text-xl font-bold text-gray-900 mb-8">Responses ({comments.length})</h3>
+    <div className="mt-16 pt-8 border-t border-gray-100 dark:border-slate-800">
+      <h3 className="text-xl font-bold text-gray-900 dark:text-slate-100 mb-8">Responses ({comments.length})</h3>
       
       {session ? (
         <form onSubmit={handleSubmit} className="mb-10">
@@ -141,14 +141,14 @@ export default function Comments({ postId, postAuthorEmail }: { postId: string, 
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="What are your thoughts?"
-            className="w-full p-4 border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-black focus:border-black resize-none min-h-25"
+            className="w-full p-4 border border-gray-200 dark:border-slate-700 bg-transparent dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-slate-900 dark:focus:ring-slate-300 focus:border-slate-900 dark:focus:border-slate-300 resize-none min-h-25"
             maxLength={1000}
           />
           <div className="flex justify-end mt-3">
             <button
               type="submit"
               disabled={isSubmitting || !newComment.trim()}
-              className="bg-green-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-green-700 transition disabled:opacity-50 flex items-center"
+              className="bg-sky-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-sky-500 transition disabled:opacity-50 flex items-center"
             >
               {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
               Respond
@@ -156,7 +156,7 @@ export default function Comments({ postId, postAuthorEmail }: { postId: string, 
           </div>
         </form>
       ) : (
-        <div className="p-4 bg-gray-50 rounded-md text-sm text-gray-600 mb-10">
+        <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-md text-sm text-slate-600 dark:text-slate-400 mb-10">
           Sign in to leave a response.
         </div>
       )}
@@ -172,14 +172,14 @@ export default function Comments({ postId, postAuthorEmail }: { postId: string, 
             const canDelete = isUserAuthor || currentUserEmail === postAuthorEmail;
 
             return (
-              <div key={comment.id} className="pb-8 border-b border-gray-50 last:border-0 relative group">
+              <div key={comment.id} className="pb-8 border-b border-gray-50 dark:border-slate-800 last:border-0 relative group">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="h-8 w-8 bg-gray-200 rounded-full flex items-center justify-center text-xs font-bold shrink-0">
+                  <div className="h-8 w-8 bg-gray-200 dark:bg-slate-800 text-slate-900 dark:text-slate-200 rounded-full flex items-center justify-center text-xs font-bold shrink-0">
                     {comment.author?.name?.[0]?.toUpperCase() || 'U'}
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm font-semibold text-gray-900">{comment.author?.name || "Unknown"}</p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-sm font-semibold text-gray-900 dark:text-slate-200">{comment.author?.name || "Unknown"}</p>
+                    <p className="text-xs text-gray-500 dark:text-slate-500">
                       {format(new Date(comment.createdAt), "MMM d, yyyy")}
                     </p>
                   </div>
@@ -204,26 +204,26 @@ export default function Comments({ postId, postAuthorEmail }: { postId: string, 
                     <textarea 
                       value={editText}
                       onChange={(e) => setEditText(e.target.value)}
-                      className="w-full p-3 border border-gray-300 rounded focus:ring-1 focus:ring-black outline-none text-sm"
+                      className="w-full p-3 border border-slate-300 dark:border-slate-700 bg-transparent dark:bg-slate-900 text-slate-900 dark:text-slate-100 rounded focus:ring-1 focus:ring-slate-900 dark:focus:ring-slate-300 outline-none text-sm"
                       rows={3}
                     />
                     <div className="flex justify-end gap-2 mt-2">
-                      <button onClick={() => setEditingId(null)} className="text-sm text-gray-600 hover:text-black">Cancel</button>
-                      <button onClick={() => handleEditSubmit(comment.id)} className="text-sm bg-green-600 text-white px-3 py-1 rounded-full hover:bg-green-700">Save</button>
+                      <button onClick={() => setEditingId(null)} className="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200">Cancel</button>
+                      <button onClick={() => handleEditSubmit(comment.id)} className="text-sm bg-sky-600 text-white px-3 py-1 rounded-full hover:bg-sky-500">Save</button>
                     </div>
                   </div>
                 ) : (
-                  <p className="text-gray-800 text-sm whitespace-pre-wrap leading-relaxed">{comment.text}</p>
+                  <p className="text-gray-800 dark:text-slate-300 text-sm whitespace-pre-wrap leading-relaxed">{comment.text}</p>
                 )}
 
                 {/* Like / Dislike */}
-                <div className="flex items-center gap-4 mt-4 text-gray-500">
-                  <button onClick={() => handleVote(comment.id, true)} className={`flex items-center gap-1 text-xs hover:text-black transition ${comment.userVote === true ? 'text-black' : ''}`}>
-                    <ThumbsUp className={`h-4 w-4 ${comment.userVote === true ? 'fill-black' : ''}`} /> {comment.likesCount}
+                <div className="flex items-center gap-4 mt-4 text-slate-500 dark:text-slate-400">
+                  <button onClick={() => handleVote(comment.id, true)} className={`flex items-center gap-1 text-xs hover:text-slate-900 dark:hover:text-slate-200 transition ${comment.userVote === true ? 'text-slate-900 dark:text-slate-200' : ''}`}>
+                    <ThumbsUp className={`h-4 w-4 ${comment.userVote === true ? 'fill-slate-900 dark:fill-slate-200' : ''}`} /> {comment.likesCount}
                   </button>
-                  <button onClick={() => handleVote(comment.id, false)} className={`flex items-center gap-1 text-xs hover:text-black transition ${comment.userVote === false ? 'text-black' : ''}`}>
-                    <ThumbsDown className={`h-4 w-4 ${comment.userVote === false ? 'fill-black' : ''}`} /> {comment.dislikesCount}
-                  </button>
+                  {/* <button onClick={() => handleVote(comment.id, false)} className={`flex items-center gap-1 text-xs hover:text-slate-900 dark:hover:text-slate-200 transition ${comment.userVote === false ? 'text-slate-900 dark:text-slate-200' : ''}`}>
+                    <ThumbsDown className={`h-4 w-4 ${comment.userVote === false ? 'fill-slate-900 dark:fill-slate-200' : ''}`} /> {comment.dislikesCount}
+                  </button> */}
                 </div>
               </div>
             );

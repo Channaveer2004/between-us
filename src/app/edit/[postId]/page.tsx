@@ -96,7 +96,7 @@ export default function EditPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-sm uppercase tracking-wider text-slate-500 font-bold">Edit journal entry</h1>
+        <h1 className="text-sm uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold">Edit journal entry</h1>
         <div className="flex gap-4">
           <button
             onClick={handleDelete}
@@ -128,7 +128,7 @@ export default function EditPage() {
           placeholder="What's on your mind today?"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full text-5xl font-serif font-bold text-slate-900 placeholder-slate-300 border-none focus:outline-none focus:ring-0 p-0 bg-transparent"
+          className="w-full text-5xl font-serif font-bold text-slate-900 dark:text-slate-100 placeholder-slate-300 dark:placeholder-slate-700 border-none focus:outline-none focus:ring-0 p-0 bg-transparent"
         />
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-4">
           <input
@@ -136,16 +136,16 @@ export default function EditPage() {
             placeholder="Add themes (comma separated) e.g. reflections, tiny wins, dear diary"
             value={tags}
             onChange={(e) => setTags(e.target.value)}
-            className="flex-1 text-lg text-slate-600 placeholder-slate-400 border-none focus:outline-none focus:ring-0 p-0 bg-transparent"
+            className="flex-1 text-lg text-slate-600 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-600 border-none focus:outline-none focus:ring-0 p-0 bg-transparent"
           />
-          <label className="flex items-center gap-2 text-sm text-slate-600 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-200 cursor-pointer hover:bg-slate-100 transition whitespace-nowrap w-max shrink-0">
+          <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-900 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-800 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap w-max shrink-0">
             <input
               type="checkbox"
               checked={followersOnly}
               onChange={(e) => setFollowersOnly(e.target.checked)}
               className="rounded text-sky-600 focus:ring-sky-500 h-4 w-4 cursor-pointer"
             />
-            <span className="font-medium text-slate-700">Followers Only <span className="text-slate-400 font-normal">gate</span></span>
+            <span className="font-medium text-slate-700 dark:text-slate-300">Followers Only <span className="text-slate-400 dark:text-slate-500 font-normal">gate</span></span>
           </label>
         </div>
         <div className="mt-8 pt-4">

@@ -42,8 +42,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     if (!session?.user?.email) {
       return (
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center min-h-[70vh] flex flex-col justify-center items-center">
-          <h1 className="text-4xl font-serif font-bold text-slate-900 mb-4">Private Journal Entry</h1>
-          <p className="text-slate-500 mb-8 max-w-lg mx-auto leading-relaxed">This reflection is marked strictly for followers. Sign in and follow {post.author?.name} to read it.</p>
+          <h1 className="text-4xl font-serif font-bold text-slate-900 dark:text-slate-100 mb-4">Private Journal Entry</h1>
+          <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-lg mx-auto leading-relaxed">This reflection is marked strictly for followers. Sign in and follow {post.author?.name} to read it.</p>
           <Link href="/login" className="bg-sky-600 text-white px-6 py-3 rounded-full font-medium shadow-sm hover:bg-sky-500 transition">Sign in to read</Link>
         </div>
       );
@@ -55,8 +55,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     if (!isAuthor && !isFollower) {
       return (
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center min-h-[70vh] flex flex-col justify-center items-center">
-          <h1 className="text-4xl font-serif font-bold text-slate-900 mb-4">Private Journal Entry</h1>
-          <p className="text-slate-500 mb-8 max-w-lg mx-auto leading-relaxed">You must be following {post.author?.name} to read this private entry.</p>
+          <h1 className="text-4xl font-serif font-bold text-slate-900 dark:text-slate-100 mb-4">Private Journal Entry</h1>
+          <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-lg mx-auto leading-relaxed">You must be following {post.author?.name} to read this private entry.</p>
           <Link href={`/user/${post.authorId}`} className="bg-sky-600 text-white px-6 py-3 rounded-full font-medium shadow-sm hover:bg-sky-500 transition">View Profile to Follow</Link>
         </div>
       );
@@ -69,27 +69,27 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   return (
     <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="mb-10">
-        <h1 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 leading-tight mb-6">
+        <h1 className="text-4xl md:text-5xl font-serif font-bold text-slate-900 dark:text-slate-100 leading-tight mb-6">
           {post.title}
         </h1>
         <div className="flex items-center gap-4">
-          <div className="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center shrink-0 text-xl font-bold">
+          <div className="h-12 w-12 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center shrink-0 text-xl font-bold text-slate-900 dark:text-slate-200">
             {post.author?.name?.[0]?.toUpperCase() || 'U'}
           </div>
           <div>
-            <p className="font-medium text-gray-900">
-              <Link href={`/user/${post.authorId}`} className="hover:underline text-black">
+            <p className="font-medium text-slate-900 dark:text-slate-100">
+              <Link href={`/user/${post.authorId}`} className="hover:underline text-slate-900 dark:text-slate-100">
                 {post.author?.name || "Unknown Author"}
               </Link>
             </p>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-slate-500 dark:text-slate-400">
               Published on {format(new Date(post.createdAt), "MMM d, yyyy")}
             </p>
           </div>
         </div>
         {session?.user?.email === post.author?.email && (
-          <div className="mt-8 border-t border-gray-100 pt-4">
-            <Link href={`/edit/${post.id}`} className="text-slate-500 hover:text-slate-900 text-sm inline-flex items-center gap-2">
+          <div className="mt-8 border-t border-slate-200 dark:border-slate-800 pt-4">
+            <Link href={`/edit/${post.id}`} className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 text-sm inline-flex items-center gap-2">
               <PenSquare className="h-4 w-4" /> Edit your entry
             </Link>
           </div>

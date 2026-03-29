@@ -55,26 +55,26 @@ export default async function Home() {
           
           <div className="space-y-12">
             {posts.length === 0 ? (
-              <p className="text-gray-500 text-lg">No stories have been published yet.</p>
+              <p className="text-gray-500 dark:text-slate-400 text-lg">No stories have been published yet.</p>
             ) : (
               posts.map((post) => (
-                <div key={post.id} className="pb-8 border-b border-gray-100 flex flex-col sm:flex-row gap-6 group">
+                <div key={post.id} className="pb-8 border-b border-gray-100 dark:border-slate-800 flex flex-col sm:flex-row gap-6 group">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-3">
-                      <div className="h-6 w-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold shrink-0">
+                      <div className="h-6 w-6 rounded-full bg-gray-200 dark:bg-slate-800 flex items-center justify-center text-xs font-bold shrink-0 text-slate-900 dark:text-slate-100">
                         {post.author?.name?.[0]?.toUpperCase() || 'U'}
                       </div>
-                      <Link href={`/user/${post.authorId}`} className="text-sm font-medium text-gray-900 hover:underline">
+                      <Link href={`/user/${post.authorId}`} className="text-sm font-medium text-gray-900 dark:text-slate-300 hover:underline">
                         {post.author?.name || "Unknown"}
                       </Link>
                     </div>
                     <Link href={`/post/${post.slug}`}>
-                      <h3 className="text-2xl font-bold text-gray-900 group-hover:underline mb-2">{post.title}</h3>
-                      <p className="text-gray-600 line-clamp-3 mb-4 leading-relaxed">
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-slate-100 group-hover:underline mb-2">{post.title}</h3>
+                      <p className="text-gray-600 dark:text-slate-400 line-clamp-3 mb-4 leading-relaxed">
                         {post.content?.replace(/<[^>]*>?/gm, '').substring(0, 200)}...
                       </p>
                     </Link>
-                    <div className="flex gap-4 text-xs text-gray-500">
+                    <div className="flex gap-4 text-xs text-gray-500 dark:text-slate-500">
                       <span>{format(new Date(post.createdAt), "MMM d, yyyy")}</span>
                       <span>·</span>
                       <span>{Math.max(1, Math.ceil((post.content?.length || 0) / 1000))} min read</span>
@@ -86,11 +86,11 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="md:w-1/3 md:pl-10 md:border-l md:border-slate-100 hidden md:block">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-6">Themes to explore</h2>
+        <div className="md:w-1/3 md:pl-10 md:border-l md:border-slate-100 dark:border-slate-800 hidden md:block">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-6">Themes to explore</h2>
           <div className="flex flex-wrap gap-2">
             {["Reflections", "Dear Diary", "Life Lessons", "Journeys", "Vulnerability", "Small Wins", "Grief"].map(tag => (
-              <Link href={`/tag/${tag.toLowerCase()}`} key={tag} className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-full text-sm text-slate-600 cursor-pointer hover:bg-slate-100 transition whitespace-nowrap">
+              <Link href={`/tag/${tag.toLowerCase()}`} key={tag} className="px-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full text-sm text-slate-600 dark:text-slate-400 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap">
                 {tag}
               </Link>
             ))}
