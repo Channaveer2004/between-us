@@ -96,7 +96,7 @@ export default function EditPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-sm uppercase tracking-wider text-gray-500 font-bold">Edit story</h1>
+        <h1 className="text-sm uppercase tracking-wider text-slate-500 font-bold">Edit journal entry</h1>
         <div className="flex gap-4">
           <button
             onClick={handleDelete}
@@ -108,7 +108,7 @@ export default function EditPage() {
           <button
             onClick={handleUpdate}
             disabled={isPublishing || isDeleting}
-            className="bg-green-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-green-700 transition disabled:opacity-50 flex items-center"
+            className="bg-sky-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-sky-700 transition disabled:opacity-50 flex items-center"
           >
             {isPublishing ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
             Save Changes
@@ -125,27 +125,27 @@ export default function EditPage() {
       <div className="space-y-6">
         <input
           type="text"
-          placeholder="Title"
+          placeholder="What's on your mind today?"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full text-5xl font-serif font-bold text-gray-900 placeholder-gray-300 border-none focus:outline-none focus:ring-0 p-0 bg-transparent"
+          className="w-full text-5xl font-serif font-bold text-slate-900 placeholder-slate-300 border-none focus:outline-none focus:ring-0 p-0 bg-transparent"
         />
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-4">
           <input
             type="text"
-            placeholder="Add tags (comma separated) e.g. tech, story, coding"
+            placeholder="Add themes (comma separated) e.g. reflections, tiny wins, dear diary"
             value={tags}
             onChange={(e) => setTags(e.target.value)}
-            className="flex-1 text-lg text-gray-600 placeholder-gray-400 border-none focus:outline-none focus:ring-0 p-0 bg-transparent"
+            className="flex-1 text-lg text-slate-600 placeholder-slate-400 border-none focus:outline-none focus:ring-0 p-0 bg-transparent"
           />
-          <label className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 px-3 py-1.5 rounded-full border border-gray-200 cursor-pointer hover:bg-gray-100 transition whitespace-nowrap w-max shrink-0">
+          <label className="flex items-center gap-2 text-sm text-slate-600 bg-slate-50 px-3 py-1.5 rounded-full border border-slate-200 cursor-pointer hover:bg-slate-100 transition whitespace-nowrap w-max shrink-0">
             <input
               type="checkbox"
               checked={followersOnly}
               onChange={(e) => setFollowersOnly(e.target.checked)}
-              className="rounded text-green-600 focus:ring-green-500 h-4 w-4 cursor-pointer"
+              className="rounded text-sky-600 focus:ring-sky-500 h-4 w-4 cursor-pointer"
             />
-            <span className="font-medium text-gray-700">Followers Only </span>
+            <span className="font-medium text-slate-700">Followers Only <span className="text-slate-400 font-normal">gate</span></span>
           </label>
         </div>
         <div className="mt-8 pt-4">

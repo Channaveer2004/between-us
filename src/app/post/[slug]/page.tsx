@@ -42,9 +42,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     if (!session?.user?.email) {
       return (
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center min-h-[70vh] flex flex-col justify-center items-center">
-          <h1 className="text-4xl font-serif font-bold text-gray-900 mb-4">Member-only story</h1>
-          <p className="text-gray-500 mb-8 max-w-lg mx-auto leading-relaxed">This story is marked as strictly for followers. Sign in and follow {post.author?.name} to unlock it.</p>
-          <Link href="/login" className="bg-green-600 text-white px-6 py-3 rounded-full font-medium shadow-sm hover:bg-green-700 transition">Sign in to read</Link>
+          <h1 className="text-4xl font-serif font-bold text-slate-900 mb-4">Private Journal Entry</h1>
+          <p className="text-slate-500 mb-8 max-w-lg mx-auto leading-relaxed">This reflection is marked strictly for followers. Sign in and follow {post.author?.name} to read it.</p>
+          <Link href="/login" className="bg-sky-600 text-white px-6 py-3 rounded-full font-medium shadow-sm hover:bg-sky-500 transition">Sign in to read</Link>
         </div>
       );
     }
@@ -55,9 +55,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     if (!isAuthor && !isFollower) {
       return (
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center min-h-[70vh] flex flex-col justify-center items-center">
-          <h1 className="text-4xl font-serif font-bold text-gray-900 mb-4">Member-only story</h1>
-          <p className="text-gray-500 mb-8 max-w-lg mx-auto leading-relaxed">You must be following {post.author?.name} to read this private story.</p>
-          <Link href={`/user/${post.authorId}`} className="bg-black text-white px-6 py-3 rounded-full font-medium shadow-sm hover:bg-gray-800 transition">View Profile to Follow</Link>
+          <h1 className="text-4xl font-serif font-bold text-slate-900 mb-4">Private Journal Entry</h1>
+          <p className="text-slate-500 mb-8 max-w-lg mx-auto leading-relaxed">You must be following {post.author?.name} to read this private entry.</p>
+          <Link href={`/user/${post.authorId}`} className="bg-sky-600 text-white px-6 py-3 rounded-full font-medium shadow-sm hover:bg-sky-500 transition">View Profile to Follow</Link>
         </div>
       );
     }
@@ -89,8 +89,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         </div>
         {session?.user?.email === post.author?.email && (
           <div className="mt-8 border-t border-gray-100 pt-4">
-            <Link href={`/edit/${post.id}`} className="text-gray-500 hover:text-gray-900 text-sm inline-flex items-center gap-2">
-              <PenSquare className="h-4 w-4" /> Edit your article
+            <Link href={`/edit/${post.id}`} className="text-slate-500 hover:text-slate-900 text-sm inline-flex items-center gap-2">
+              <PenSquare className="h-4 w-4" /> Edit your entry
             </Link>
           </div>
         )}

@@ -31,19 +31,19 @@ export default async function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <div className="bg-[#FFC017] border-b border-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 flex flex-col items-start justify-center min-h-112.5">
-          <h1 className="text-7xl md:text-8xl font-serif text-gray-900 tracking-tighter mb-6 leading-tight">
-            Stay curious.
+      <div className="bg-[#0b1b32] border-b border-[#0f2442]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 flex flex-col items-start justify-center min-h-[60vh]">
+          <h1 className="text-5xl md:text-7xl font-serif text-sky-50 tracking-tight mb-6 leading-tight max-w-3xl">
+            A quiet corner of the internet.
           </h1>
-          <p className="text-xl md:text-2xl text-gray-800 mb-8 max-w-lg leading-relaxed">
-            Discover stories, thinking, and expertise from writers on any topic.
+          <p className="text-xl md:text-2xl text-sky-100/70 mb-10 max-w-2xl leading-relaxed font-light">
+            Escape the short-form dopamine loop. A space to share your unpolished days, profound learnings, and intimate stories with the people who matter.
           </p>
           <Link
             href="/register"
-            className="bg-black text-white px-8 py-3 rounded-full text-xl font-medium hover:bg-gray-800 transition"
+            className="bg-sky-600 text-white px-8 py-3.5 rounded-full text-lg font-medium hover:bg-sky-500 transition shadow-lg shadow-sky-900/50"
           >
-            Start reading
+            Start your journal
           </Link>
         </div>
       </div>
@@ -51,7 +51,7 @@ export default async function Home() {
       {/* Main Content Area */}
       <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col md:flex-row gap-12">
         <div className="md:w-2/3">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-6">Latest on between-us</h2>
+          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-8">Recent Reflections</h2>
           
           <div className="space-y-12">
             {posts.length === 0 ? (
@@ -86,11 +86,11 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="md:w-1/3 md:pl-8 md:border-l md:border-gray-100 hidden md:block">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-6">Discover more of what matters to you</h2>
+        <div className="md:w-1/3 md:pl-10 md:border-l md:border-slate-100 hidden md:block">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-6">Themes to explore</h2>
           <div className="flex flex-wrap gap-2">
-            {["Programming", "Data Science", "Technology", "Self Improvement", "Writing", "Relationships", "Machine Learning"].map(tag => (
-              <Link href={`/tag/${tag.toLowerCase()}`} key={tag} className="px-4 py-2 bg-gray-50 border border-gray-200 rounded-full text-sm text-gray-600 cursor-pointer hover:bg-gray-100">
+            {["Reflections", "Dear Diary", "Life Lessons", "Journeys", "Vulnerability", "Small Wins", "Grief"].map(tag => (
+              <Link href={`/tag/${tag.toLowerCase()}`} key={tag} className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-full text-sm text-slate-600 cursor-pointer hover:bg-slate-100 transition whitespace-nowrap">
                 {tag}
               </Link>
             ))}

@@ -54,8 +54,8 @@ body {
   margin-bottom: 1.5rem;
 }
 .ProseMirror p.is-editor-empty:first-child::before {
-  color: #9ca3af;
-  content: "Tell your story...";
+  color: #64748b;
+  content: "Start journaling...";
   float: left;
   height: 0;
   pointer-events: none;
