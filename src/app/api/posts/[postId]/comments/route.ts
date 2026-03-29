@@ -26,7 +26,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ postId: 
       if (u) currentUserId = u.id;
     }
 
-    const finalComments = comments.map(c => ({
+    const finalComments = comments.map((c: any) => ({
       id: c.id,
       text: c.text,
       createdAt: c.createdAt,
