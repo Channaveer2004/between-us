@@ -97,6 +97,19 @@ export default async function Home() {
           </div>
         </div>
       </div>
+      
+      {/* Footer */}
+      <footer className="border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-10 mt-12 transition-colors duration-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-sm text-slate-500 dark:text-slate-400">
+          <p className="mb-4 sm:mb-0">© {new Date().getFullYear()} between-us. A calm web space.</p>
+          <div className="flex space-x-6 font-medium">
+            <Link href="/" className="hover:text-slate-900 dark:hover:text-slate-200 transition">About</Link>
+            <Link href="/" className="hover:text-slate-900 dark:hover:text-slate-200 transition">Help</Link>
+            <Link href="/" className="hover:text-slate-900 dark:hover:text-slate-200 transition">Terms</Link>
+            <Link href="/" className="hover:text-slate-900 dark:hover:text-slate-200 transition">Privacy</Link>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
