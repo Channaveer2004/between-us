@@ -8,7 +8,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ postId: 
     const { postId } = await params;
     const session = await getServerSession(authOptions);
     const userEmail = session?.user?.email;
-    
+
     const comments = await prisma.comment.findMany({
       where: { postId },
       include: {
@@ -31,9 +31,9 @@ export async function GET(req: Request, { params }: { params: Promise<{ postId: 
       text: c.text,
       createdAt: c.createdAt,
       author: c.author,
-      likesCount: c.likes.filter(l => l.isLike).length,
-      dislikesCount: c.likes.filter(l => !l.isLike).length,
-      userVote: currentUserId ? c.likes.find(l => l.userId === currentUserId)?.isLike ?? null : null
+      likesCount: c.likes.filter((l: { isLike: any; }) => l.isLike).length,
+      dislikesCount: c.likes.filter((l: { isLike: any; }) => !l.isLike).length,
+      userVote: currentUserId ? c.likes.find((l: { userId: any; }) => l.userId === currentUserId)?.isLike ?? null : null
     }));
 
     return NextResponse.json(finalComments);
