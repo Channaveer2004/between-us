@@ -32,16 +32,16 @@ export default async function Home() {
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <div className="bg-[#0b1b32] border-b border-[#0f2442]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 flex flex-col items-start justify-center min-h-[60vh]">
-          <h1 className="text-5xl md:text-7xl font-serif text-sky-50 tracking-tight mb-6 leading-tight max-w-3xl">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 flex flex-col items-start justify-center min-h-[50vh] md:min-h-[60vh]">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif text-sky-50 tracking-tight mb-4 sm:mb-6 leading-tight max-w-3xl wrap-break-word w-full">
             A quiet corner of the internet.
           </h1>
-          <p className="text-xl md:text-2xl text-sky-100/70 mb-10 max-w-2xl leading-relaxed font-light">
+          <p className="text-lg sm:text-xl md:text-2xl text-sky-100/70 mb-8 sm:mb-10 max-w-2xl leading-relaxed font-light">
             Escape the short-form dopamine loop. A space to share your unpolished days, profound learnings, and intimate stories with the people who matter.
           </p>
           <Link
             href="/register"
-            className="bg-sky-600 text-white px-8 py-3.5 rounded-full text-lg font-medium hover:bg-sky-500 transition shadow-lg shadow-sky-900/50"
+            className="bg-sky-600 text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-full text-base sm:text-lg font-medium hover:bg-sky-500 transition shadow-lg shadow-sky-900/50"
           >
             Start your journal
           </Link>
@@ -100,9 +100,9 @@ export default async function Home() {
       
       {/* Footer */}
       <footer className="border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-10 mt-12 transition-colors duration-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-sm text-slate-500 dark:text-slate-400">
-          <p className="mb-4 sm:mb-0">© {new Date().getFullYear()} between-us. A calm web space.</p>
-          <div className="flex space-x-6 font-medium">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-sm text-slate-500 dark:text-slate-400 gap-4">
+          <p className="mb-2 sm:mb-0 text-center sm:text-left">© {new Date().getFullYear()} between-us. A calm web space.</p>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 font-medium">
             <Link href="/" className="hover:text-slate-900 dark:hover:text-slate-200 transition">About</Link>
             <Link href="/" className="hover:text-slate-900 dark:hover:text-slate-200 transition">Help</Link>
             <Link href="/" className="hover:text-slate-900 dark:hover:text-slate-200 transition">Terms</Link>

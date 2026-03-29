@@ -50,9 +50,30 @@ export default async function PublicProfilePage({ params }: { params: Promise<{ 
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col md:flex-row gap-12 min-h-screen">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 flex flex-col md:flex-row gap-8 md:gap-12 min-h-screen">
+      
+      {/* Sidebar Info */}
+      <div className="md:w-1/3">
+        <div className="md:sticky md:top-24 flex flex-col items-center md:items-start pb-8 md:pb-0 border-b border-slate-200 dark:border-slate-800 md:border-none">
+          <div className="h-20 w-20 md:h-24 md:w-24 bg-slate-200 dark:bg-slate-800 rounded-full mb-4 md:mb-6 flex items-center justify-center text-3xl md:text-4xl font-bold shrink-0 text-slate-900 dark:text-slate-100">
+            {targetedUser.name?.[0]?.toUpperCase() || "U"}
+          </div>
+          <h2 className="text-2xl md:text-xl font-bold text-slate-900 dark:text-slate-100 text-center md:text-left">{targetedUser.name}</h2>
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1 text-center md:text-left">{targetedUser._count.followers} Followers</p>
+
+          <div className="mt-4 md:mt-6 w-full flex justify-center md:justify-start">
+            {!isOwnProfile ? (
+              <FollowButton targetUserId={targetedUser.id} initialFollow={isFollowing} />
+            ) : (
+              <Link href="/profile" className="text-sm text-green-600 hover:text-green-700 font-medium">
+                Go to your dashboard
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
+
       <div className="md:w-2/3">
-        <h2 className="text-4xl font-serif font-bold text-slate-900 dark:text-slate-100 mb-8 md:hidden">{targetedUser.name}</h2>
         <div className="border-b border-slate-200 dark:border-slate-800 mb-8 pb-4">
           <span className="border-slate-900 text-slate-900 dark:border-slate-100 dark:text-slate-100 font-medium text-sm border-b-2 py-4">
             Published Stories
@@ -79,26 +100,6 @@ export default async function PublicProfilePage({ params }: { params: Promise<{ 
               </div>
             ))
           )}
-        </div>
-      </div>
-
-      <div className="md:w-1/3">
-        <div className="sticky top-24">
-          <div className="h-20 w-20 bg-slate-200 dark:bg-slate-800 rounded-full mb-4 flex items-center justify-center text-3xl font-bold text-slate-600 dark:text-slate-100">
-            {targetedUser.name?.[0]?.toUpperCase() || "U"}
-          </div>
-          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">{targetedUser.name}</h2>
-          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">{targetedUser._count.followers} Followers</p>
-
-          <div className="mt-6">
-            {!isOwnProfile ? (
-              <FollowButton targetUserId={targetedUser.id} initialFollow={isFollowing} />
-            ) : (
-              <Link href="/profile" className="text-sm text-green-600 hover:text-green-700 font-medium">
-                Go to your dashboard
-              </Link>
-            )}
-          </div>
         </div>
       </div>
     </div>

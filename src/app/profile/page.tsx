@@ -42,14 +42,24 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col md:flex-row gap-12 min-h-screen">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 flex flex-col md:flex-row gap-8 md:gap-12 min-h-screen">
       
+      {/* Sidebar: Profile Info */}
+      <div className="md:w-1/3">
+        <div className="md:sticky md:top-24 flex flex-col items-center md:items-start pb-8 md:pb-0 border-b border-slate-200 dark:border-slate-800 md:border-none">
+          <div className="h-20 w-20 md:h-24 md:w-24 bg-slate-200 dark:bg-slate-800 rounded-full mb-4 md:mb-6 flex items-center justify-center text-3xl md:text-4xl font-bold shrink-0 text-slate-900 dark:text-slate-100">
+            {user.name?.[0]?.toUpperCase()}
+          </div>
+          <h2 className="text-2xl md:text-xl font-bold text-slate-900 dark:text-slate-100 text-center md:text-left">{user.name}</h2>
+          <p className="text-slate-500 dark:text-slate-400 text-sm mb-2 mt-1 text-center md:text-left">{user.email}</p>
+        </div>
+      </div>
+
       {/* Main content: Posts / Reading List */}
       <div className="md:w-2/3">
-        <h1 className="text-4xl font-serif font-bold text-slate-900 dark:text-slate-100 mb-8 md:hidden">{user.name}</h1>
         
-        <div className="border-b border-slate-200 dark:border-slate-800 mb-8">
-          <nav className="-mb-px flex space-x-8">
+        <div className="border-b border-slate-200 dark:border-slate-800 mb-8 overflow-x-auto no-scrollbar">
+          <nav className="-mb-px flex space-x-6 sm:space-x-8">
             <Link 
               href="/profile"
               className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'stories' ? 'border-slate-900 text-slate-900 dark:border-slate-100 dark:text-slate-100' : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700'}`}
@@ -145,17 +155,6 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
               </div>
             )
           )}
-        </div>
-      </div>
-
-      {/* Sidebar: Profile Info */}
-      <div className="md:w-1/3">
-        <div className="sticky top-24">
-          <div className="h-24 w-24 bg-slate-200 dark:bg-slate-800 rounded-full mb-6 flex items-center justify-center text-4xl font-bold shrink-0 text-slate-900 dark:text-slate-100">
-            {user.name?.[0]?.toUpperCase()}
-          </div>
-          <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">{user.name}</h2>
-          <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 mt-1">{user.email}</p>
         </div>
       </div>
       
