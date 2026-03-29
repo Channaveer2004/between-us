@@ -25,6 +25,7 @@ model User {
   likes         Like[]
   bookmarks     Bookmark[]
   commentLikes  CommentLike[]
+  allowedPosts  Post[]    @relation("PostAllowedUsers")
   
   followers     Follows[] @relation("following")
   following     Follows[] @relation("follower")
@@ -86,6 +87,7 @@ model Post {
   followersOnly Boolean  @default(false)
   authorId      String
   author        User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  allowedUsers  User[]   @relation("PostAllowedUsers")
   
   comments    Comment[]
   likes       Like[]

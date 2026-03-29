@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Editor from "@/components/Editor";
-import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { useRouter, useParams } from "next/navigation";
+import { Loader2, Users } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useParams } from "next/navigation";
 
 export default function EditPage() {
   const router = useRouter();
@@ -21,6 +20,23 @@ export default function EditPage() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [followers, setFollowers] = useState<any[]>([]);
+  const [selectedFollowers, setSelectedFollowers] = useState<string[]>([]);
+  const [isLoadingFollowers, setIsLoadingFollowers] = useState(false);
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      setIsLoadingFollowers(true);
+      fetch('/api/user/followers')
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data)) {
+            setFollowers(data);
+          }
+        })
+        .finally(() => setIsLoadingFollowers(false));
+    }
+  }, [status]);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -36,9 +52,11 @@ export default function EditPage() {
         })
         .then(data => {
           setTitle(data.title);
-          setContent(data.content || "");
           setTags(data.tags?.map((t: any) => t.name).join(", ") || "");
           setFollowersOnly(data.followersOnly || false);
+          if (data.allowedUsers && Array.isArray(data.allowedUsers)) {
+            setSelectedFollowers(data.allowedUsers.map((u: any) => u.id));
+          }
           setIsLoading(false);
         })
         .catch(() => {
@@ -60,7 +78,13 @@ export default function EditPage() {
       const res = await fetch(`/api/posts/${postId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, content, tags, followersOnly }),
+        body: JSON.stringify({ 
+          title, 
+          content, 
+          tags, 
+          followersOnly,
+          allowedUserIds: followersOnly ? selectedFollowers : []
+        }),
       });
 
       if (!res.ok) throw new Error("Failed to update post.");
@@ -142,12 +166,61 @@ export default function EditPage() {
             <input
               type="checkbox"
               checked={followersOnly}
-              onChange={(e) => setFollowersOnly(e.target.checked)}
+              onChange={(e) => {
+                const isChecked = e.target.checked;
+                setFollowersOnly(isChecked);
+                if (isChecked && selectedFollowers.length === 0) {
+                  setSelectedFollowers(followers.map(f => f.id));
+                }
+              }}
               className="rounded text-sky-600 focus:ring-sky-500 h-4 w-4 cursor-pointer"
             />
             <span className="font-medium text-slate-700 dark:text-slate-300">Followers Only <span className="text-slate-400 dark:text-slate-500 font-normal">gate</span></span>
           </label>
         </div>
+
+        {followersOnly && (
+          <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 mt-4">
+            <div className="flex items-center gap-2 mb-4 text-slate-700 dark:text-slate-300 font-medium">
+              <Users className="h-5 w-5" />
+              <h3>Select who can view this entry</h3>
+            </div>
+            
+            {isLoadingFollowers ? (
+              <div className="flex gap-2 items-center text-slate-500 text-sm"><Loader2 className="h-4 w-4 animate-spin"/> Loading followers...</div>
+            ) : followers.length === 0 ? (
+              <p className="text-sm text-slate-500">You don't have any followers yet.</p>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
+                {followers.map(follower => (
+                  <label key={follower.id} className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 cursor-pointer hover:border-sky-300 dark:hover:border-sky-700 transition">
+                    <input 
+                      type="checkbox"
+                      checked={selectedFollowers.includes(follower.id)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedFollowers([...selectedFollowers, follower.id]);
+                        } else {
+                          setSelectedFollowers(selectedFollowers.filter(id => id !== follower.id));
+                        }
+                      }}
+                      className="h-4 w-4 text-sky-600 rounded focus:ring-sky-500"
+                    />
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="h-6 w-6 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-700 dark:text-slate-300 shrink-0">
+                        {follower.name?.[0]?.toUpperCase() || 'U'}
+                      </div>
+                      <span className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">{follower.name}</span>
+                    </div>
+                  </label>
+                ))}
+              </div>
+            )}
+            <p className="text-xs text-slate-500 mt-4 leading-relaxed">
+              If checked, only the selected followers above will receive access to read this journal entry. Anyone unchecked will not be able to see it on their feed.
+            </p>
+          </div>
+        )}
         <div className="mt-8 pt-4">
           <Editor content={content} onChange={setContent} />
         </div>

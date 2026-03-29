@@ -8,7 +8,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ postId: 
     const { postId } = await params;
     const post = await prisma.post.findUnique({
       where: { id: postId },
-      include: { tags: true }
+      include: { tags: true, allowedUsers: { select: { id: true } } }
     });
     if (!post) {
       return new NextResponse("Not Found", { status: 404 });
@@ -30,7 +30,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ postId
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const { title, content, tags, followersOnly } = await req.json();
+    const { title, content, tags, followersOnly, allowedUserIds } = await req.json();
     
     const tagsArray = typeof tags === "string" && tags.trim() !== "" 
       ? tags.split(",").map((t: string) => t.trim().toLowerCase()).filter((t: string) => t.length > 0)
@@ -48,7 +48,12 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ postId
             where: { name: tag },
             create: { name: tag }
           }))
-        }
+        },
+        ...(followersOnly !== undefined && {
+          allowedUsers: {
+            set: Array.isArray(allowedUserIds) ? allowedUserIds.map((id: string) => ({ id })) : []
+          }
+        })
       }
     });
 

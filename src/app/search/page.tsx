@@ -20,7 +20,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
             OR: [
               { followersOnly: false },
               ...(userEmail ? [
-                { author: { followers: { some: { follower: { email: userEmail } } } } },
+                { allowedUsers: { some: { email: userEmail } } },
                 { author: { email: userEmail } }
               ] : [])
             ]

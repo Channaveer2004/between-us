@@ -19,7 +19,7 @@ export async function POST(req: Request) {
       return new NextResponse("User not found", { status: 404 });
     }
 
-    const { title, content, tags, published, followersOnly } = await req.json();
+    const { title, content, tags, published, followersOnly, allowedUserIds } = await req.json();
 
     if (!title || !content) {
       return new NextResponse("Title and content are required", { status: 400 });
@@ -47,6 +47,9 @@ export async function POST(req: Request) {
             where: { name: tag },
             create: { name: tag }
           }))
+        },
+        allowedUsers: {
+          connect: Array.isArray(allowedUserIds) ? allowedUserIds.map((id: string) => ({ id })) : []
         }
       }
     });

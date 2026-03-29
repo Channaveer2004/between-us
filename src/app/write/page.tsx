@@ -3,8 +3,9 @@
 import { useState } from "react";
 import Editor from "@/components/Editor";
 import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { Loader2, Users } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 export default function WritePage() {
   const router = useRouter();
@@ -16,6 +17,24 @@ export default function WritePage() {
   const [followersOnly, setFollowersOnly] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [error, setError] = useState("");
+  const [followers, setFollowers] = useState<any[]>([]);
+  const [selectedFollowers, setSelectedFollowers] = useState<string[]>([]);
+  const [isLoadingFollowers, setIsLoadingFollowers] = useState(false);
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      setIsLoadingFollowers(true);
+      fetch('/api/user/followers')
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data)) {
+            setFollowers(data);
+            setSelectedFollowers(data.map(f => f.id));
+          }
+        })
+        .finally(() => setIsLoadingFollowers(false));
+    }
+  }, [status]);
 
   if (status === "loading") {
     return <div className="p-8 text-center text-gray-500">Loading...</div>;
@@ -45,6 +64,7 @@ export default function WritePage() {
           tags,
           published: true, // Auto-publish for simplicity
           followersOnly,
+          allowedUserIds: followersOnly ? selectedFollowers : [],
         }),
       });
 
@@ -108,6 +128,50 @@ export default function WritePage() {
             <label htmlFor="followersOnly" className="text-sm text-slate-700 dark:text-slate-300 font-medium cursor-pointer">Followers Only</label>
           </div>
         </div>
+
+        {followersOnly && (
+          <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 mt-4">
+            <div className="flex items-center gap-2 mb-4 text-slate-700 dark:text-slate-300 font-medium">
+              <Users className="h-5 w-5" />
+              <h3>Select who can view this entry</h3>
+            </div>
+            
+            {isLoadingFollowers ? (
+              <div className="flex gap-2 items-center text-slate-500 text-sm"><Loader2 className="h-4 w-4 animate-spin"/> Loading followers...</div>
+            ) : followers.length === 0 ? (
+              <p className="text-sm text-slate-500">You don't have any followers yet.</p>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
+                {followers.map(follower => (
+                  <label key={follower.id} className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 cursor-pointer hover:border-sky-300 dark:hover:border-sky-700 transition">
+                    <input 
+                      type="checkbox"
+                      checked={selectedFollowers.includes(follower.id)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedFollowers([...selectedFollowers, follower.id]);
+                        } else {
+                          setSelectedFollowers(selectedFollowers.filter(id => id !== follower.id));
+                        }
+                      }}
+                      className="h-4 w-4 text-sky-600 rounded focus:ring-sky-500"
+                    />
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="h-6 w-6 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-700 dark:text-slate-300 shrink-0">
+                        {follower.name?.[0]?.toUpperCase() || 'U'}
+                      </div>
+                      <span className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">{follower.name}</span>
+                    </div>
+                  </label>
+                ))}
+              </div>
+            )}
+            <p className="text-xs text-slate-500 mt-4 leading-relaxed">
+              If checked, only the selected followers above will receive access to read this journal entry. Anyone unchecked will not be able to see it on their feed.
+            </p>
+          </div>
+        )}
+
         <div className="mt-8 pt-4">
           <Editor content={content} onChange={setContent} />
         </div>

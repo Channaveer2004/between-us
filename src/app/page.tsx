@@ -16,7 +16,7 @@ export default async function Home() {
       OR: [
         { followersOnly: false },
         ...(userEmail ? [
-          { author: { followers: { some: { follower: { email: userEmail } } } } },
+          { allowedUsers: { some: { email: userEmail } } },
           { author: { email: userEmail } }
         ] : [])
       ]

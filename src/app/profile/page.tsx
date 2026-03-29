@@ -13,11 +13,16 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
   }
 
   const resolvedParams = await searchParams;
-  const activeTab = resolvedParams?.tab === "saved" ? "saved" : "stories";
+  const activeTab = resolvedParams?.tab === "saved" ? "saved" : (resolvedParams?.tab === "followers" ? "followers" : "stories");
 
   const user = await prisma.user.findUnique({
     where: { email: session.user.email },
     include: {
+      followers: {
+        include: {
+          follower: { select: { id: true, name: true, email: true } }
+        }
+      },
       posts: {
         orderBy: { createdAt: "desc" }
       },
@@ -56,6 +61,12 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
               className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'saved' ? 'border-slate-900 text-slate-900 dark:border-slate-100 dark:text-slate-100' : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700'}`}
             >
               Reading List
+            </Link>
+            <Link 
+              href="/profile?tab=followers"
+              className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'followers' ? 'border-slate-900 text-slate-900 dark:border-slate-100 dark:text-slate-100' : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700'}`}
+            >
+              Followers
             </Link>
           </nav>
         </div>
@@ -109,6 +120,29 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
                   </div>
                 </div>
               ))
+            )
+          )}
+
+          {activeTab === "followers" && (
+            user.followers.length === 0 ? (
+              <p className="text-slate-500 dark:text-slate-400 text-lg py-12 text-center">You don't have any followers yet. Keep writing and sharing to grow your audience!</p>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {user.followers.map((f) => {
+                  const follower = f.follower;
+                  return (
+                    <Link key={follower.id} href={`/user/${follower.id}`} className="flex items-center gap-4 p-4 border border-slate-100 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition">
+                      <div className="h-12 w-12 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-xl font-bold shrink-0 text-slate-600 dark:text-slate-100">
+                        {follower.name?.[0]?.toUpperCase() || 'U'}
+                      </div>
+                      <div className="overflow-hidden">
+                        <h3 className="font-bold text-slate-900 dark:text-slate-100 truncate">{follower.name || "Unknown User"}</h3>
+                        <p className="text-sm text-slate-500 dark:text-slate-400 truncate">{follower.email}</p>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
             )
           )}
         </div>
