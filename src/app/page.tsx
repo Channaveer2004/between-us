@@ -45,7 +45,7 @@ export default async function Home() {
             Escape the short-form dopamine loop. A space to share your unpolished days, profound learnings, and intimate stories with the people who matter.
           </p>
           <Link
-            href="/register"
+            href={session ? "/write" : "/register"}
             className="bg-sky-600 text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-full text-base sm:text-lg font-medium hover:bg-sky-500 transition shadow-lg shadow-sky-900/50"
           >
             Start your journal
@@ -54,28 +54,29 @@ export default async function Home() {
       </div>
 
       {/* Main Content Area */}
-      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col md:flex-row gap-12">
-        <div className="md:w-2/3">
+      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] gap-10 lg:gap-12 items-start">
+        <div className="min-w-0 bg-white dark:bg-slate-950/40 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm p-6 md:p-8">
           <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-8">Recent Reflections</h2>
           
-          <div className="space-y-12">
+          <div className="space-y-10">
             {posts.length === 0 ? (
               <p className="text-gray-500 dark:text-slate-400 text-lg">No stories have been published yet.</p>
             ) : (
               posts.map((post: any) => (
-                <div key={post.id} className="pb-8 border-b border-gray-100 dark:border-slate-800 flex flex-col sm:flex-row gap-6 group">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="h-6 w-6 rounded-full bg-gray-200 dark:bg-slate-800 flex items-center justify-center text-xs font-bold shrink-0 text-slate-900 dark:text-slate-100">
+                <div key={post.id} className="pb-8 border-b border-gray-100 dark:border-slate-800 last:border-0">
+                  <div className="flex flex-col sm:flex-row gap-6 group">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="h-6 w-6 rounded-full bg-gray-200 dark:bg-slate-800 flex items-center justify-center text-xs font-bold shrink-0 text-slate-900 dark:text-slate-100">
                         {post.author?.name?.[0]?.toUpperCase() || 'U'}
                       </div>
-                      <Link href={`/user/${post.authorId}`} className="text-sm font-medium text-gray-900 dark:text-slate-300 hover:underline">
-                        {post.author?.name || "Unknown"}
-                      </Link>
-                    </div>
+                        <Link href={`/user/${post.authorId}`} className="text-sm font-medium text-gray-900 dark:text-slate-300 hover:underline">
+                          {post.author?.name || "Unknown"}
+                        </Link>
+                      </div>
                     <Link href={`/post/${post.slug}`}>
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-slate-100 group-hover:underline mb-2">{post.title}</h3>
-                      <p className="text-gray-600 dark:text-slate-400 line-clamp-3 mb-4 leading-relaxed">
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-slate-100 group-hover:underline mb-2 break-words">{post.title}</h3>
+                      <p className="text-gray-600 dark:text-slate-400 line-clamp-3 mb-4 leading-relaxed break-words">
                         {post.content?.replace(/<[^>]*>?/gm, '').substring(0, 200)}...
                       </p>
                     </Link>
@@ -86,16 +87,17 @@ export default async function Home() {
                     </div>
                   </div>
                 </div>
+              </div>
               ))
             )}
           </div>
         </div>
 
-        <div className="md:w-1/3 md:pl-10 md:border-l md:border-slate-100 dark:border-slate-800 hidden md:block">
+        <div className="hidden md:block bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-sm sticky top-24">
           <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-6">Themes to explore</h2>
           <div className="flex flex-wrap gap-2">
             {["Reflections", "Dear Diary", "Life Lessons", "Journeys", "Vulnerability", "Small Wins", "Grief"].map(tag => (
-              <Link href={`/tag/${tag.toLowerCase()}`} key={tag} className="px-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full text-sm text-slate-600 dark:text-slate-400 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap">
+              <Link href={`/tag/${tag.toLowerCase()}`} key={tag} className="px-4 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full text-sm text-slate-600 dark:text-slate-400 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap">
                 {tag}
               </Link>
             ))}
