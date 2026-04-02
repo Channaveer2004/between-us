@@ -27,5 +27,5 @@ export async function GET() {
   }
 
   // Returns array of follower User objects
-  return NextResponse.json(user.followers.map(f => f.follower));
+  return NextResponse.json(user.followers.map((f: any) => f.follower));
 }
