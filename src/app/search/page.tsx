@@ -21,7 +21,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
               { followersOnly: false },
               ...(userEmail ? [
                 { allowedUsers: { some: { email: userEmail } } },
-                { author: { email: userEmail } }
+                { author: { email: userEmail } },
+                { author: { followers: { some: { follower: { email: userEmail } } } } }
               ] : [])
             ]
           },
@@ -49,7 +50,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 min-h-screen">
-      <h1 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 dark:text-slate-100 mb-2 break-all sm:break-words">
+      <h1 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 dark:text-slate-100 mb-2 break-all sm:wrap-break-word">
         Results for <span className="text-slate-500 dark:text-slate-400">"{q}"</span>
       </h1>
       <div className="flex gap-4 text-slate-500 dark:text-slate-400 mb-12 border-b border-slate-100 dark:border-slate-800 pb-4">

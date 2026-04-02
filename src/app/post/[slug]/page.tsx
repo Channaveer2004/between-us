@@ -55,8 +55,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
     const isAuthor = post.author?.email === session.user.email;
     const isAllowed = post.allowedUsers && post.allowedUsers.length > 0;
+    const isFollower = post.author?.followers && post.author.followers.length > 0;
 
-    if (!isAuthor && !isAllowed) {
+    if (!isAuthor && !isAllowed && !isFollower) {
       return (
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center min-h-[70vh] flex flex-col justify-center items-center">
           <h1 className="text-4xl font-serif font-bold text-slate-900 dark:text-slate-100 mb-4">Private Journal Entry</h1>

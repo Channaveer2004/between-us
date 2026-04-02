@@ -17,7 +17,8 @@ export default async function Home() {
         { followersOnly: false },
         ...(userEmail ? [
           { allowedUsers: { some: { email: userEmail } } },
-          { author: { email: userEmail } }
+          { author: { email: userEmail } },
+          { author: { followers: { some: { follower: { email: userEmail } } } } }
         ] : [])
       ]
     },

@@ -21,7 +21,8 @@ export default async function PublicProfilePage({ params }: { params: Promise<{ 
             { followersOnly: false },
             ...(session?.user?.email ? [
               { allowedUsers: { some: { email: session.user.email } } },
-              { author: { email: session.user.email } }
+              { author: { email: session.user.email } },
+              { author: { followers: { some: { follower: { email: session.user.email } } } } }
             ] : [])
           ]
         },

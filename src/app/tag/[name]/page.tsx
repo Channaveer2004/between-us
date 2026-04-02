@@ -1,15 +1,28 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { format } from "date-fns";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export default async function TagPage({ params }: { params: Promise<{ name: string }> }) {
   const { name } = await params;
   const decodedName = decodeURIComponent(name).toLowerCase();
 
+  const session = await getServerSession(authOptions);
+  const userEmail = session?.user?.email;
+
   const posts = await prisma.post.findMany({
     where: {
       published: true,
-      tags: { some: { name: decodedName } }
+      tags: { some: { name: decodedName } },
+      OR: [
+        { followersOnly: false },
+        ...(userEmail ? [
+          { allowedUsers: { some: { email: userEmail } } },
+          { author: { email: userEmail } },
+          { author: { followers: { some: { follower: { email: userEmail } } } } }
+        ] : [])
+      ]
     },
     include: { author: { select: { name: true } } },
     orderBy: { createdAt: "desc" }
