@@ -18,9 +18,13 @@ export default async function TagPage({ params }: { params: Promise<{ name: stri
       OR: [
         { followersOnly: false },
         ...(userEmail ? [
-          { allowedUsers: { some: { email: userEmail } } },
           { author: { email: userEmail } },
-          { author: { followers: { some: { follower: { email: userEmail } } } } }
+          { 
+            AND: [
+              { allowedUsers: { some: { email: userEmail } } },
+              { author: { followers: { some: { follower: { email: userEmail } } } } }
+            ]
+          }
         ] : [])
       ]
     },
