@@ -86,7 +86,7 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
             user.posts.length === 0 ? (
               <p className="text-slate-500 dark:text-slate-400">You haven't written any stories yet.</p>
             ) : (
-              user.posts.map((post) => (
+              user.posts.map((post: any) => (
                 <div key={post.id} className="pb-8 border-b border-slate-100 dark:border-slate-800">
                   <Link href={`/post/${post.slug}`} className="block group">
                     <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 group-hover:underline mb-2">{post.title}</h2>
@@ -107,7 +107,7 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
             user.bookmarks.length === 0 ? (
               <p className="text-slate-500 dark:text-slate-400 text-lg py-12 text-center">No saved stories. Start reading and click the bookmark icon to save your favorites!</p>
             ) : (
-              user.bookmarks.map((bookmark) => (
+              user.bookmarks.map((bookmark: any) => (
                 <div key={bookmark.id} className="pb-8 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row gap-6 group">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-3">
@@ -138,7 +138,7 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
               <p className="text-slate-500 dark:text-slate-400 text-lg py-12 text-center">You don't have any followers yet. Keep writing and sharing to grow your audience!</p>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {user.followers.map((f) => {
+                {user.followers.map((f: any) => {
                   const follower = f.follower;
                   return (
                     <Link key={follower.id} href={`/user/${follower.id}`} className="flex items-center gap-4 p-4 border border-slate-100 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition">

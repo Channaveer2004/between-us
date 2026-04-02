@@ -57,7 +57,7 @@ export default async function Home() {
             {posts.length === 0 ? (
               <p className="text-gray-500 dark:text-slate-400 text-lg">No stories have been published yet.</p>
             ) : (
-              posts.map((post) => (
+              posts.map((post: any) => (
                 <div key={post.id} className="pb-8 border-b border-gray-100 dark:border-slate-800 flex flex-col sm:flex-row gap-6 group">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-3">

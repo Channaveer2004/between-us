@@ -84,7 +84,7 @@ export default async function PublicProfilePage({ params }: { params: Promise<{ 
           {targetedUser.posts.length === 0 ? (
             <p className="text-slate-500 dark:text-slate-400">This user hasn't published any stories yet.</p>
           ) : (
-            targetedUser.posts.map((post) => (
+            targetedUser.posts.map((post: any) => (
               <div key={post.id} className="pb-8 border-b border-slate-100 dark:border-slate-800 flex flex-col gap-2 group">
                 <Link href={`/post/${post.slug}`}>
                   <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 group-hover:underline mb-2">{post.title}</h3>
