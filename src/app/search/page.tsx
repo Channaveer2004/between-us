@@ -68,7 +68,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         <div className="mb-12">
           <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-6">People</h2>
           <div className="flex flex-wrap gap-6">
-            {users.map(user => (
+            {users.map((user: any) => (
               <Link key={user.id} href={`/user/${user.id}`} className="flex items-center gap-4 p-4 border border-slate-100 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition w-full sm:w-[calc(50%-12px)]">
                 <div className="h-12 w-12 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-xl font-bold shrink-0 text-slate-600 dark:text-slate-100">
                   {user.name?.[0]?.toUpperCase() || 'U'}
